@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
 
 app.use('/posts', postRoutes)
-app.use('/user', postRoutes)
+app.use('/user', userRoutes)
 
 // https://www.mongodb.com/cloud/atlas
 

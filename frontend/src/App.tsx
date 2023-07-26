@@ -1,6 +1,5 @@
-import './App.css'
 
-function App() { 
+const App = () => { 
   return ( 
     <div>
       Welcome to the Frontend

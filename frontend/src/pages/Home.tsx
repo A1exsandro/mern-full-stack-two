@@ -1,8 +1,9 @@
+import Posts from "../components/Posts"
 
 const Home = () => {
   return (
-    <div className="">
-      Hello, welcome home
+    <div className="flex justify-center flex-wrap">
+      <Posts />
     </div>
   )
 }

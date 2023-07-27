@@ -8,12 +8,12 @@ const Layout = () => {
         bg-gray-200"
       >
         <div className="text-2xl text-blue-500">
-          Memories
+          <Link to="/">Memories</Link>
         </div>
         <button 
           className="bg-blue-500 text-white px-5 py-2 rounded-xl my-2"
         >
-          Sing In
+          <Link to="/auth">Sing In</Link>
         </button>
       </nav>
 

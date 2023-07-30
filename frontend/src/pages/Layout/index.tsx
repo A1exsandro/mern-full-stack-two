@@ -11,7 +11,7 @@ const Layout = () => {
   const profileString = localStorage.getItem('userData')
   const initialProfile: UserData = profileString ? 
     JSON.parse(profileString) : {user: { token: null }}
-  console.log('here',initialProfile.user);
+ 
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -24,11 +24,9 @@ const Layout = () => {
     setProfileToken(initialToken)
   }
 
-  useEffect(() => {
-    const updatedProfileString = localStorage.getItem('userData')
-    const updatedProfile: UserData = updatedProfileString ? 
-      JSON.parse(updatedProfileString) : { user: { token: "" } }
-    const updatedToken = updatedProfile.user.token;
+  useEffect(() => { 
+    const updatedProfile: UserData = initialProfile
+    const updatedToken = updatedProfile.user.token
     setProfileToken(updatedToken)
     
     // TREAT AN EXPIRATION TIME FOR THE TOKEN

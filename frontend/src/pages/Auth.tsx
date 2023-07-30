@@ -28,7 +28,7 @@ const Auth = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const user = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
-  console.log(user.status)
+  // console.log(user.status)
 
   const [form, setForm] = useState<FormValue>(initialState)
   const [isSignup, setIsSignup] = useState(true)
@@ -47,7 +47,7 @@ const Auth = () => {
     if (isSignup) { 
       try {
         const response = await dispatch(postUser(form))  
-        if (user.status.toString() === 'succeeded' ) {
+        if (user.status.toString() == 'succeeded' ) {
           localStorage.setItem('userData', JSON.stringify(response.payload))
           navigate('/')
         }
@@ -57,8 +57,8 @@ const Auth = () => {
     } else {
       try {
         const response = await dispatch(postSigin(form)) 
-        console.log(response)
-        if (user.status.toString() === 'succeeded' ) {
+        // console.log(response)
+        if (user.status.toString() == 'succeeded' ) {
           localStorage.setItem('userData', JSON.stringify(response.payload))
           navigate('/')
         }

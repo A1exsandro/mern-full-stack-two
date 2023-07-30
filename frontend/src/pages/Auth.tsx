@@ -1,6 +1,12 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import lock from '../assets/icons/lock.svg'
 import Input from '../components/auth/Input'
+import { useNavigate } from 'react-router-dom' 
+
+import type { RootState } from '../store'
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import { useSelector, useDispatch } from 'react-redux' 
+import { postUser, postSigin } from '../features/auth/authSlice'
 
 const initialState = { 
   firstName: '', 
@@ -10,16 +16,56 @@ const initialState = {
   confirmPassword: '' 
 } 
 
+interface FormValue {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 const Auth = () => {
-  const [form, setForm] = useState(initialState)
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const user = useSelector((state: RootState) => state.user)
+  const navigate = useNavigate()
+  console.log(user.status)
+
+  const [form, setForm] = useState<FormValue>(initialState)
   const [isSignup, setIsSignup] = useState(true)
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false) 
 
   // SWITCH FORM TO REGISTER OR SING IN
   const switchMode = () => {
     setForm(initialState)
     setIsSignup((prevIsSignup) => !prevIsSignup)
     setShowPassword(false)
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+     
+    if (isSignup) { 
+      try {
+        const response = await dispatch(postUser(form))  
+        if (user.status.toString() === 'succeeded' ) {
+          localStorage.setItem('userData', JSON.stringify(response.payload))
+          navigate('/')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        const response = await dispatch(postSigin(form)) 
+        console.log(response)
+        if (user.status.toString() === 'succeeded' ) {
+          localStorage.setItem('userData', JSON.stringify(response.payload))
+          navigate('/')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 
   // CAPTURE INPUT VALUE
@@ -49,7 +95,7 @@ const Auth = () => {
         </div>
 
         {/* FORM */}
-        <form className="">
+        <form className="" onSubmit={handleSubmit}>
           {
             isSignup && (
               <div className="flex gap-2">
@@ -98,16 +144,19 @@ const Auth = () => {
             { isSignup ? 'Sign Up' : 'Sign In' }
           </button>
 
-          <button className="" onClick={switchMode}>
-            { 
-              isSignup ? (
-                'Already have an account? Sign in' 
-                ) : (
-                "Don't have an account? Sign Up" 
-              )
-            }
-          </button>
+          {/* <LoginWithGoogle /> */}
+          <div>{}</div>
         </form>
+
+        <button className="" onClick={switchMode}>
+          { 
+            isSignup ? (
+              'Already have an account? Sign in' 
+              ) : (
+              "Don't have an account? Sign Up" 
+            )
+          }
+        </button>
       </div>
     </div>
   )

@@ -1,50 +1,46 @@
-import capa from '../assets/capa.png'
+import React from 'react'
+import moment from 'moment'
+import { PostMessage } from '../features/postsSlice'
 
-type Post = {
-  id?: number;
-  title: string;
-  content: string;
-  tags: string[];
-  selectedFile: string;
-  creator: string;
-  createdAt: Date;
+interface PostProps {
+  post: PostMessage;
 }
 
-const Post = () => { 
-
+const Post: React.FC<PostProps> = ({ post }) => { 
+  console.log(post)
   return (
     <div 
       className="flex flex-col w-80 aspect-[3/4] rounded-xl m-2 shadow-2xl"
     >
-      <div className="">
+      <div className="h-1/2">
         <img 
-          className="rounded-t-xl"
-          src={capa} 
+          className="rounded-t-xl h-full"
+          src={post.selectedFile} 
           alt="" 
         />
       </div>
 
       <div className="flex flex-col justify-between gap-2 p-3 rounded-b-xl 
-        bg-gray-200">
+        bg-gray-200 h-1/2">
         {/* CREATOR */}
         <div className="flex justify-between">
-          <h2 className="text-xl font-bold">Alexsandro</h2>
-          <h3 className="font-bold">8 days ago</h3>
+          <h2 className="text-xl font-bold">{post.name}</h2>
+          <h3 className="font-bold">{moment(post.createdAt).fromNow()}</h3>
         </div>
 
         {/* TAG */}
         <div className="text-gray-500">
-          #yourTag
+          {post.tags.map((tag) => `#${tag} `)}
         </div>
 
         {/* TITLE */}
         <div className="text-xl font-bold">
-          Only a test of title
+          {post.title}
         </div>
 
         {/* CONTENT */}
         <div className="text-gray-500">
-          A test of content in an application web. Today is Jully, 27.
+          {post.message}
         </div>
 
         {/* REACT */}

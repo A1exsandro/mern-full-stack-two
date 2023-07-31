@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { PostMessage } from '../features/postsSlice'
+import { User } from '../features/auth/authSlice'
 
 interface Profile {
   token: string;
@@ -17,6 +19,7 @@ API.interceptors.request.use((req) => {
 })
 
 export const fetchPosts = () => API.get('/posts')
+export const createPost = (newPost: PostMessage) => API.post('/posts', newPost)
 
-export const signIn = (formData: any) => API.post('/user/signin', formData)
-export const signUp = (formData: any) => API.post('/user/signup', formData)
+export const signIn = (formData: User) => API.post('/user/signin', formData)
+export const signUp = (formData: User) => API.post('/user/signup', formData)

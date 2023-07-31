@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store';
+import { RootState } from '../../store'
 
 import * as api from '../../api/index'
 
@@ -14,7 +14,7 @@ interface User {
 
 interface UsersState {
   data: User[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: string | null;
 }
 
@@ -47,26 +47,26 @@ export const counterSlice = createSlice({
   extraReducers: (builder) => { 
     builder
     .addCase(postUser.pending, (state) => {
-      state.status = 'loading';
+      state.status = 'loading'
     })
     .addCase(postUser.fulfilled, (state, action) => {
-      state.status = 'succeeded';
-      state.data.push(action.payload.user);
+      state.status = 'succeeded'
+      state.data.push(action.payload.user)
     })
     .addCase(postUser.rejected, (state, action) => {
-      state.status = 'failed';
-      // state.error = action.error.message;
+      state.status = 'failed'
+      // state.error = action.error.message
     })
     .addCase(postSigin.pending, (state) => {
-      state.status = 'loading';
+      state.status = 'loading'
     })
     .addCase(postSigin.fulfilled, (state, action) => {
-      state.status = 'succeeded';
-      state.data.push(action.payload.user);
+      state.status = 'succeeded'
+      state.data.push(action.payload.user)
     })
     .addCase(postSigin.rejected, (state, action) => {
-      state.status = 'failed';
-      // state.error = action.error.message;
+      state.status = 'failed'
+      // state.error = action.error.message
     })
   },
 })
